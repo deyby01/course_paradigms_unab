@@ -2,5 +2,5 @@
 
 **Below you can find specific instructions for this task.**
 
-[Specific Instructions](Enunciado_Tarea1_.docx)
+[Specific Instructions](Enunciado_Tarea1_.pdf)
 
