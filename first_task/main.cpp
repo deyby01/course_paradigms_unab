@@ -1,3 +1,4 @@
+#include "exercises.h"
 #include <iostream>
 using namespace std;
 
@@ -13,6 +14,12 @@ void menu() {
 }
 
 int main (int argc, char *argv[]) {
+
+    // Strength e1(1, "Mechanic stair", "Beginner", 30.0, "For burn calories", "yestarday");
+    // e1.showDetail();
+
+    // If you want to test basic functionality coment block of white and
+    // uncomment and run the code above.
     while (true){
         cout << endl;
         menu();
