@@ -134,7 +134,7 @@ void Exercise::deleteExercise() {
 void Exercise::showDetail() const {
     cout << "Detail of Exercise! " << endl;
 
-    cout << "Id: " << id << "\nName: " << name
+    cout << "\nId: " << id << "\nName: " << name
         << "\nType: " << type << "\nIntensity level: " << intensity_level
         << "\nEstimated time: " << estimated_time << "\nDescription: " << description
         << "\nLast time used: " << last_used << "\n";
