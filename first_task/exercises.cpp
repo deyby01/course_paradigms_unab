@@ -78,7 +78,7 @@ void Exercise::setLastUsed(string last_used) {
 
 // Methods
 void Exercise::create() {
-    cout << "Create a New Exercise! " << endl;
+    cout << "Create a New Exercise " << endl;
 
     int ident;
     cout << "ID of exercise: ";
@@ -115,12 +115,35 @@ void Exercise::create() {
 }
 
 void Exercise::update(){
-    cout << "Update an Exercise! " << endl;
-    create();
+    cout << "\n--- Update Exercise (ID: " << id << " will not be changed) ---" << endl;
+    cin.ignore(); // para borrar el salto de linea 
+    string new_name;
+    cout << "Name of exercise: ";
+    getline(cin, new_name);
+    setName(new_name);
+    string i_level;
+    cout << "Intensity level: ";
+    getline(cin, i_level);
+    setIntensityLevel(i_level);
+    double e_time;
+    cout << "Estimated time of Exercise: ";
+    cin >> e_time;
+    cin.ignore();
+    setEstimatedTime(e_time);
+    string descript;
+    cout << "Description of exercise: ";
+    getline(cin, descript);
+    setDescription(descript);
+    string l_used;
+    cout << "Last time used: ";
+    getline(cin, l_used);
+    setLastUsed(l_used);
+    
+    cout << "Exercise successfully updated" << endl;
 }
 
 void Exercise::deleteExercise() {
-    cout << "Delete an Exercise!" << endl;
+    cout << "Delete an Exercise" << endl;
 
     id=0;
     name.clear();
@@ -132,11 +155,10 @@ void Exercise::deleteExercise() {
 }
 
 void Exercise::showDetail() const {
-    cout << "Detail of Exercise! " << endl;
-
+    cout << "Detail of Exercise " << endl;
     cout << "Id: " << id << "\nName: " << name
         << "\nType: " << type << "\nIntensity level: " << intensity_level
-        << "\nEstimated time: " << estimated_time << "\nDescription: " << description
+        << "\nEstimated time: " << estimated_time << " min" << "\nDescription: " << description
         << "\nLast time used: " << last_used << "\n";
 }
 
@@ -159,7 +181,7 @@ Strength::~Strength(){
 }
 
 void Strength::showDetail() const {
-    cout << "Strength Exercise detail!" << endl;
+    cout << "Strength Exercise detail" << endl;
     Exercise::showDetail();
 }
 
@@ -181,6 +203,6 @@ Cardio::~Cardio(){
 }
 
 void Cardio::showDetail() const {
-    cout << "Cardio Exercise detail!" << endl;
+    cout << "Cardio Exercise detail" << endl;
     Exercise::showDetail();
 }
