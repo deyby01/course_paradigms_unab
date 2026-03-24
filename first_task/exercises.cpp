@@ -121,7 +121,6 @@ void Exercise::update(){
 
 void Exercise::deleteExercise() {
     cout << "Delete an Exercise!" << endl;
-
     id=0;
     name.clear();
     type.clear();
@@ -132,9 +131,7 @@ void Exercise::deleteExercise() {
 }
 
 void Exercise::showDetail() const {
-    cout << "Detail of Exercise! " << endl;
-
-    cout << "\nId: " << id << "\nName: " << name
+    cout << "Id: " << id << "\nName: " << name
         << "\nType: " << type << "\nIntensity level: " << intensity_level
         << "\nEstimated time: " << estimated_time << "\nDescription: " << description
         << "\nLast time used: " << last_used << "\n";
@@ -159,8 +156,10 @@ Strength::~Strength(){
 }
 
 void Strength::showDetail() const {
+    cout << endl;
     cout << "Strength Exercise detail!" << endl;
     Exercise::showDetail();
+    cout << endl;
 }
 
 // Class Cardio.
