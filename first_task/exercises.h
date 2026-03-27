@@ -9,11 +9,14 @@ class Exercise{
         string intensity_level;
         double estimated_time;
         string description;
-        string last_used;
+        int last_used;
+
+        // Static variable to asign unique IDs to exercises.
+        static int nextId;
 
     public:
         Exercise();
-        Exercise(int id, string name, string type, string intensity_level, double estimated_time, string description, string last_used);
+        Exercise(string name, string type, string intensity_level, double estimated_time, string description, int last_used);
         virtual ~Exercise();
 
         // Getter's and setter's
@@ -35,8 +38,8 @@ class Exercise{
         string getDescription() const;
         void setDescription(string description);
 
-        string getLastUsed() const;
-        void setLastUsed(string last_used);
+        int getLastUsed() const;
+        void setLastUsed(int last_used);
 
         void create();
         void update();
@@ -48,8 +51,8 @@ class Exercise{
 class Strength: public Exercise {
     public:
         Strength();
-        Strength(int id, string name, string intensity_level, double estimated_time,
-                string description, string last_used);
+        Strength(string name, string intensity_level, double estimated_time,
+                string description, int last_used);
         ~Strength();
 
         void showDetail() const override;
@@ -58,8 +61,8 @@ class Strength: public Exercise {
 class Cardio: public Exercise {
     public:
         Cardio();
-        Cardio(int id, string name, string intensity_level, double estimated_time,
-              string description, string last_used);
+        Cardio(string name, string intensity_level, double estimated_time,
+              string description, int last_used);
         ~Cardio();
 
         void showDetail() const override;
