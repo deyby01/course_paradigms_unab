@@ -199,6 +199,11 @@ int main () {
             for (size_t i = 0; i < exercises.size(); i++) {
                 if (exercises[i]->getIntensityLevel() == level && currentWeek - exercises[i]->getLastUsed() >= 2) {
                     routine.push_back(exercises[i]);
+                    exercises[i]->setLastUsed(currentWeek);
+
+                    if (routine.size() == numExercises) {
+                        break;
+                    }
                 }
             }
 
