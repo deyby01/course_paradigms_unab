@@ -163,9 +163,22 @@ int main () {
             cout << "Comming soon :)" << endl;
         } else if (choice == 3) {
             cout << "Comming soon :)" << endl;
-        } else if (choice == 4) {
-            cout << "Comming soon :)" << endl;
 
+        } else if (choice == 4) {
+            cout << "Exercise Details:" << endl;
+            for (size_t i = 0; i < exercises.size(); i++) {
+                cout << i + 1 << ". " << exercises[i]->getName() << endl;
+            }
+            cout << "Select an exercise to view details: ";
+            size_t exerciseChoice;
+            cin >> exerciseChoice;
+
+            if (exerciseChoice < 1 || exerciseChoice > exercises.size()) {
+                cout << "Invalid exercise choice." << endl;
+            } else {
+                exercises[exerciseChoice - 1]->showDetail();
+            }
+            
         } else if (choice == 5) {
             string level;
             int levelOption;
