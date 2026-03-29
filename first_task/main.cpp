@@ -178,15 +178,41 @@ int main () {
                 if (!cin){
                     cout <<"Invalid input. Please enter a number." << endl;
                     cin.clear();
-                    cin.ignore();
+                    cin.ignore( } else if (choice == 4) {
+            cout << "Exercise Details:" << endl;
+            for (size_t i = 0; i < exercises.size(); i++) {
+                cout << i + 1 << ". " << exercises[i]->getName() << endl;
+            }
+            cout << "Select an exercise to view details: ";
+            size_t exerciseChoice;
+            {
+            while (true) {
+                cin >> exerciseChoice;
+
+                if (!cin){
+                    cout <<"Invalid input. Please enter a number." << endl;
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+
+                    cout << "Select an exercise to view details: ";
+                } else {
+                    break;
+                }
+            }
+        }
+            if (exerciseChoice < 1 || exerciseChoice > exercises.size()) {
+                cout << "Invalid exercise choice." << endl;
+            } else {
+                exercises[exerciseChoice - 1]->showDetail();
+            }
+            );
 
                     cout << "Select an exercise to view details: ";
                 } else {
                     continue;
                 }
             }
-
-
+        }
             if (exerciseChoice < 1 || exerciseChoice > exercises.size()) {
                 cout << "Invalid exercise choice." << endl;
             } else {
