@@ -164,21 +164,7 @@ int main () {
         } else if (choice == 3) {
             cout << "Comming soon :)" << endl;
 
-        } else if (choice == 4) {
-            cout << "Exercise Details:" << endl;
-            for (size_t i = 0; i < exercises.size(); i++) {
-                cout << i + 1 << ". " << exercises[i]->getName() << endl;
-            }
-            cout << "Select an exercise to view details: ";
-            size_t exerciseChoice;
-            {
-            while (true) {
-                cin >> exerciseChoice;
-
-                if (!cin){
-                    cout <<"Invalid input. Please enter a number." << endl;
-                    cin.clear();
-                    cin.ignore( } else if (choice == 4) {
+      else if (choice == 4) {
             cout << "Exercise Details:" << endl;
             for (size_t i = 0; i < exercises.size(); i++) {
                 cout << i + 1 << ". " << exercises[i]->getName() << endl;
