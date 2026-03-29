@@ -171,7 +171,21 @@ int main () {
             }
             cout << "Select an exercise to view details: ";
             size_t exerciseChoice;
-            cin >> exerciseChoice;
+            {
+            while (true) {
+                cin >> exerciseChoice;
+
+                if (!cin){
+                    cout <<"Invalid input. Please enter a number." << endl;
+                    cin.clear();
+                    cin.ignore();
+
+                    cout << "Select an exercise to view details: ";
+                } else {
+                    continue;
+                }
+            }
+
 
             if (exerciseChoice < 1 || exerciseChoice > exercises.size()) {
                 cout << "Invalid exercise choice." << endl;
