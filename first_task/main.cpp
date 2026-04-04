@@ -14,7 +14,6 @@ void menu() {
     cout << "5. Search Exercise by Level" << endl;
     cout << "6. Generate Routine" << endl;
     cout << "7. Exit" << endl;
-    cout << "Enter your choice: ";
 }
 
 void levels() {
@@ -23,27 +22,43 @@ void levels() {
     cout << "2. Intermediate" << endl;
     cout << "3. Advanced" << endl;
     cout << "4. High Performance" << endl;
-    cout << "Enter your option: ";
+}
+
+void exerciseType() {
+    cout << "\nType of exercise:" << endl;
+    cout << "1. Strength" << endl;
+    cout << "2. Cardio" << endl;
 }
 
 string levelChoice(int levelChoice) {
     string level;
-    while (levelChoice < 1 || levelChoice > 4) {
-        cout << "Invalid level choice. Please enter a number between 1 and 4." << endl;
-        cout << "Enter your option: ";
-        cin >> levelChoice;
-    }
 
-    if (levelChoice == 1) {
-        level = "Beginner";
-    } else if (levelChoice == 2) {
-        level = "Intermediate";
-    } else if (levelChoice == 3) {
-        level = "Advanced";
-    } else if (levelChoice == 4) {
-        level = "High Performance";
-    }
+    if (levelChoice == 1) level = "Beginner";
+    else if (levelChoice == 2) level = "Intermediate";
+    else if (levelChoice == 3) level = "Advanced";
+    else if (levelChoice == 4) level = "High Performance";
+
     return level;
+}
+
+int validateOption(int min, int max){
+    cout << "Enter your option: ";
+    int option;
+    while (true) {
+        cin >> option;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore();
+            cout << "Invalid input. Please enter a number: ";
+
+        } else if (option < min || option > max) {
+            cout << "Invalid option. Please enter a number between " << min << " and " << max << ": ";
+
+        } else {
+            return option;
+        }
+    }
 }
 
 void loadFixtures(vector<Exercise*>& exercises) {
@@ -154,75 +169,91 @@ int main () {
     while (true){
         cout << endl;
         menu();
-        int choice;
-        cin >> choice;
+        int choice = validateOption(1, 7);
 
         if (choice == 1) {
-            cout << "Comming soon :)" << endl;
-        } else if (choice == 2) {
-            cout << "Comming soon :)" << endl;
-        } else if (choice == 3) {
-            cout << "Comming soon :)" << endl;
+            exerciseType();
+            Exercise* nuevo;
+            int option = validateOption(1, 2);
 
-        } else if (choice == 4) {
+            if (option == 1) {
+                nuevo = new Strength();
+            }
+            else if (option == 2) {
+                nuevo = new Cardio();
+            }
+
+            // Create exercise
+            nuevo->create();
+
+            // Save
+            exercises.push_back(nuevo);
+
+            // Verification
+            cout << "\nExercise created successfully:\n";
+            nuevo->showDetail();
+        }
+
+        else if (choice == 2) {
+            cout << "Comming soon!" << endl;
+        }
+
+        else if (choice == 3) {
+            cout << "Comming soon!" << endl;
+        }
+
+        else if (choice == 4) {
             cout << "Exercise Details:" << endl;
+
             for (size_t i = 0; i < exercises.size(); i++) {
                 cout << i + 1 << ". " << exercises[i]->getName() << endl;
             }
+
             cout << "Select an exercise to view details: ";
-            size_t exerciseChoice;
-            cin >> exerciseChoice;
+            int exerciseChoice = validateOption(1, exercises.size());
+            exercises[exerciseChoice - 1]->showDetail();
 
-            if (cin.fail()) {
-                cin.clear(); // Clear the error state
-                cin.ignore(); // Discard invalid input
-                cout << "Invalid input. Please enter a number." << endl;
-                continue;
+        }
 
-            } else if (exerciseChoice < 1 || exerciseChoice > exercises.size()) {
-                cout << "Invalid exercise choice." << endl;
-            } else {
-                exercises[exerciseChoice - 1]->showDetail();
-            }
-
-        } else if (choice == 5) {
-            string level;
-            int levelOption;
+        else if (choice == 5) {
             cout << "What level do you want to search?" << endl;
+
             levels();
-            cin >> levelOption;
-            level = levelChoice(levelOption);
+            int op = validateOption(1, 4);
+            string level = levelChoice(op);
 
             for (size_t i = 0; i < exercises.size(); i++) {
                 if (exercises[i]->getIntensityLevel() == level) {
                     exercises[i]->showDetail();
                 }
             }
+        }
 
-        } else if (choice == 6) {
-            cout << "===== Exercise Routine =====" << endl;
-            cout << "How much exercises do you want: ";
-            size_t numExercises;
-            cin >> numExercises;
+        else if (choice == 6) {
+            cout << "======================" << endl;
+            cout << "|| Exercise Routine ||" << endl;
+            cout << "======================" << endl;
 
-            int levelOption;
+            cout << "== How much exercises do you want ==" << endl;
+            size_t numExercises = (size_t)validateOption(1, exercises.size());
+
             cout << "What level do you want for your routine?" << endl;
+
             levels();
-            cin >> levelOption;
-            string level = levelChoice(levelOption);
+            int op = validateOption(1, 4);
+            string level = levelChoice(op);
 
             double totalTime = 0.0;
-
             vector<Exercise*> routine;
 
             for (size_t i = 0; i < exercises.size(); i++) {
-                if (exercises[i]->getIntensityLevel() == level && currentWeek - exercises[i]->getLastUsed() >= 2) {
+                if (exercises[i]->getIntensityLevel() == level &&
+                    currentWeek - exercises[i]->getLastUsed() >= 2) {
+
                     routine.push_back(exercises[i]);
                     exercises[i]->setLastUsed(currentWeek);
 
-                    if (routine.size() == numExercises) {
-                        break;
-                    }
+                    if (routine.size() == numExercises) break;
                 }
             }
 
@@ -230,19 +261,22 @@ int main () {
                 cout << "Not enough exercises available for the selected level." << endl;
             } else {
                 cout << "====== Generated Routine =====" << endl;
+
                 for (size_t i = 0; i < numExercises; i++) {
                     routine[i]->showDetail();
                     totalTime += routine[i]->getEstimatedTime();
                 }
+
                 cout << "Total Estimated Time: " << totalTime << " minutes" << endl;
             }
+        }
 
-
-
-        } else if (choice == 7) {
+        else if (choice == 7) {
             cout << "Exiting the program. Goodbye!" << endl;
             break;
-        } else {
+        }
+
+        else {
             cout << "Invalid choice." << endl;
         }
     }
