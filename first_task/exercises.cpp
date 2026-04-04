@@ -3,6 +3,9 @@
 #include <string>
 using namespace std;
 
+// Initialize static variable.
+int Exercise::nextId = 1;
+
 // Constructors of father class.
 Exercise::Exercise() {
     this->id = 0;
@@ -11,15 +14,13 @@ Exercise::Exercise() {
     this->intensity_level = "";
     this->estimated_time = 0.0;
     this->description = "";
-    this->last_used = "";
-    cout << "Exercise created by default." << endl;
+    this->last_used = 0;
 }
 
-Exercise::Exercise(int id, string name, string type, string intensity_level,
-                   double estimated_time, string description, string last_used)
-    : id(id), name(name), type(type), intensity_level(intensity_level),
+Exercise::Exercise(string name, string type, string intensity_level,
+                   double estimated_time, string description, int last_used)
+    : id(nextId++), name(name), type(type), intensity_level(intensity_level),
       estimated_time(estimated_time), description(description), last_used(last_used) {
-    cout << "Exercise created successfully." << endl;
 }
 
 Exercise::~Exercise(){
@@ -69,22 +70,16 @@ void Exercise::setDescription(string description) {
     this->description = description;
 }
 
-string Exercise::getLastUsed() const {
+int Exercise::getLastUsed() const {
     return last_used;
 }
-void Exercise::setLastUsed(string last_used) {
+void Exercise::setLastUsed(int last_used) {
     this->last_used = last_used;
 }
 
 // Methods
 void Exercise::create() {
-    cout << "Create a New Exercise " << endl;
-
-    int ident;
-    cout << "ID of exercise: ";
-    cin >> ident;
-    cin.ignore();
-    setId(ident);
+    cout << "Create a New Exercise! " << endl;
 
     string name;
     cout << "Name of exercise: ";
@@ -107,58 +102,61 @@ void Exercise::create() {
     getline(cin, descript);
     setDescription(descript);
 
-    string l_used;
+    int l_used;
     cout << "Last time used: ";
-    getline(cin, l_used);
+    cin >> l_used;
+    cin.ignore();
     setLastUsed(l_used);
-
 }
 
-void Exercise::update(){
+void Exercise::update() {
     cout << "\n--- Update Exercise (ID: " << id << " will not be changed) ---" << endl;
-    cin.ignore(); // para borrar el salto de linea 
+    
+    cin.ignore(); 
+    
     string new_name;
     cout << "Name of exercise: ";
     getline(cin, new_name);
     setName(new_name);
-    string i_level;
+
+    string new_i_level;
     cout << "Intensity level: ";
-    getline(cin, i_level);
-    setIntensityLevel(i_level);
-    double e_time;
+    getline(cin, new_i_level);
+    setIntensityLevel(new_i_level);
+
+    double new_e_time;
     cout << "Estimated time of Exercise: ";
-    cin >> e_time;
+    cin >> new_e_time;
     cin.ignore();
-    setEstimatedTime(e_time);
-    string descript;
+    setEstimatedTime(new_e_time);
+
+    string new_descript;
     cout << "Description of exercise: ";
-    getline(cin, descript);
-    setDescription(descript);
-    string l_used;
+    getline(cin, new_descript);
+    setDescription(new_descript);
+
+    int new_l_used;
     cout << "Last time used: ";
-    getline(cin, l_used);
-    setLastUsed(l_used);
-    
-    cout << "Exercise successfully updated" << endl;
+    cin >> new_l_used;
+    cin.ignore();
+    setLastUsed(new_l_used);
 }
 
 void Exercise::deleteExercise() {
-    cout << "Delete an Exercise" << endl;
-
+    cout << "Delete an Exercise!" << endl;
     id=0;
     name.clear();
     type.clear();
     intensity_level.clear();
     estimated_time=0.0;
     description.clear();
-    last_used.clear();
+    last_used=0;
 }
 
 void Exercise::showDetail() const {
-    cout << "Detail of Exercise " << endl;
     cout << "Id: " << id << "\nName: " << name
         << "\nType: " << type << "\nIntensity level: " << intensity_level
-        << "\nEstimated time: " << estimated_time << " min" << "\nDescription: " << description
+        << "\nEstimated time: " << estimated_time << " minutes \nDescription: " << description
         << "\nLast time used: " << last_used << "\n";
 }
 
@@ -170,10 +168,10 @@ Strength::Strength() : Exercise() {
     cout << "Strength Exercise created by default." << endl;
 }
 
-Strength::Strength(int id, string name, string intensity_level,
-        double estimated_time, string description, string last_used)
-    : Exercise(id, name, "Strength", intensity_level, estimated_time, description, last_used){
-    cout << "Strength Exercise created successfully! " << endl;
+Strength::Strength(string name, string intensity_level,
+        double estimated_time, string description, int last_used)
+    : Exercise(name, "Strength", intensity_level, estimated_time, description, last_used){
+
 }
 
 Strength::~Strength(){
@@ -181,8 +179,10 @@ Strength::~Strength(){
 }
 
 void Strength::showDetail() const {
-    cout << "Strength Exercise detail" << endl;
+    cout << endl;
+    cout << "Strength Exercise detail!" << endl;
     Exercise::showDetail();
+    cout << endl;
 }
 
 // Class Cardio.
@@ -192,10 +192,10 @@ Cardio::Cardio() : Exercise() {
     cout << "Cardio Exercise created by default." << endl;
 }
 
-Cardio::Cardio(int id, string name, string intensity_level,
-        double estimated_time, string description, string last_used)
-    : Exercise(id, name, "Cardio", intensity_level, estimated_time, description, last_used){
-    cout << "Cardio Exercise created successfully! " << endl;
+Cardio::Cardio(string name, string intensity_level,
+        double estimated_time, string description, int last_used)
+    : Exercise(name, "Cardio", intensity_level, estimated_time, description, last_used){
+
 }
 
 Cardio::~Cardio(){
@@ -203,6 +203,8 @@ Cardio::~Cardio(){
 }
 
 void Cardio::showDetail() const {
-    cout << "Cardio Exercise detail" << endl;
+    cout << endl;
+    cout << "Cardio Exercise detail!" << endl;
     Exercise::showDetail();
+    cout << endl;
 }
