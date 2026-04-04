@@ -80,6 +80,7 @@ void Exercise::setLastUsed(int last_used) {
 // Methods
 void Exercise::create() {
     cout << "Create a New Exercise! " << endl;
+    cin.ignore(); // Clear the input buffer before reading strings.
 
     string name;
     cout << "Name of exercise: ";
