@@ -8,7 +8,7 @@ int Exercise::nextId = 1;
 
 // Constructors of father class.
 Exercise::Exercise() {
-    this->id = 0;
+    this->id = nextId++;
     this->name = "";
     this->type = "";
     this->intensity_level = "";
@@ -80,7 +80,7 @@ void Exercise::setLastUsed(int last_used) {
 // Methods
 void Exercise::create() {
     cout << "Create a New Exercise! " << endl;
-    cin.ignore(); // Clear the input buffer before reading strings.
+    cin.ignore();
 
     string name;
     cout << "Name of exercise: ";
@@ -110,27 +110,44 @@ void Exercise::create() {
     setLastUsed(l_used);
 }
 
-void Exercise::update(){
-    cout << "Update an Exercise! " << endl;
-    create();
-}
+void Exercise::update() {
+    cout << "\n--- Update Exercise (ID: " << id << " will not be changed) ---" << endl;
 
-void Exercise::deleteExercise() {
-    cout << "Delete an Exercise!" << endl;
-    id=0;
-    name.clear();
-    type.clear();
-    intensity_level.clear();
-    estimated_time=0.0;
-    description.clear();
-    last_used=0;
+    cin.ignore();
+
+    string new_name;
+    cout << "Name of exercise: ";
+    getline(cin, new_name);
+    setName(new_name);
+
+    string new_i_level;
+    cout << "Intensity level: ";
+    getline(cin, new_i_level);
+    setIntensityLevel(new_i_level);
+
+    double new_e_time;
+    cout << "Estimated time of Exercise: ";
+    cin >> new_e_time;
+    cin.ignore();
+    setEstimatedTime(new_e_time);
+
+    string new_descript;
+    cout << "Description of exercise: ";
+    getline(cin, new_descript);
+    setDescription(new_descript);
+
+    int new_l_used;
+    cout << "Last time used: ";
+    cin >> new_l_used;
+    cin.ignore();
+    setLastUsed(new_l_used);
 }
 
 void Exercise::showDetail() const {
     cout << "Id: " << id << "\nName: " << name
         << "\nType: " << type << "\nIntensity level: " << intensity_level
         << "\nEstimated time: " << estimated_time << " minutes \nDescription: " << description
-        << "\nLast time used: " << last_used << "\n";
+        << "\nLast time used: Week " << last_used << "\n";
 }
 
 
