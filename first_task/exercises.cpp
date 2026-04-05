@@ -8,7 +8,7 @@ int Exercise::nextId = 1;
 
 // Constructors of father class.
 Exercise::Exercise() {
-    this->id = 0;
+    this->id = nextId++;
     this->name = "";
     this->type = "";
     this->intensity_level = "";
@@ -80,6 +80,7 @@ void Exercise::setLastUsed(int last_used) {
 // Methods
 void Exercise::create() {
     cout << "Create a New Exercise! " << endl;
+    cin.ignore(); 
 
     string name;
     cout << "Name of exercise: ";
