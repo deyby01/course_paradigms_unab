@@ -80,7 +80,7 @@ void Exercise::setLastUsed(int last_used) {
 // Methods
 void Exercise::create() {
     cout << "Create a New Exercise! " << endl;
-    cin.ignore(); 
+    cin.ignore();
 
     string name;
     cout << "Name of exercise: ";
@@ -112,9 +112,9 @@ void Exercise::create() {
 
 void Exercise::update() {
     cout << "\n--- Update Exercise (ID: " << id << " will not be changed) ---" << endl;
-    
-    cin.ignore(); 
-    
+
+    cin.ignore();
+
     string new_name;
     cout << "Name of exercise: ";
     getline(cin, new_name);
@@ -143,22 +143,11 @@ void Exercise::update() {
     setLastUsed(new_l_used);
 }
 
-void Exercise::deleteExercise() {
-    cout << "Delete an Exercise!" << endl;
-    id=0;
-    name.clear();
-    type.clear();
-    intensity_level.clear();
-    estimated_time=0.0;
-    description.clear();
-    last_used=0;
-}
-
 void Exercise::showDetail() const {
     cout << "Id: " << id << "\nName: " << name
         << "\nType: " << type << "\nIntensity level: " << intensity_level
         << "\nEstimated time: " << estimated_time << " minutes \nDescription: " << description
-        << "\nLast time used: " << last_used << "\n";
+        << "\nLast time used: Week " << last_used << "\n";
 }
 
 

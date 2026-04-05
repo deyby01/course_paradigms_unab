@@ -5,6 +5,7 @@
 #include <ctime>
 using namespace std;
 
+// Show the main menu options to the user.
 void menu() {
     cout << "\n---- Main Menu ----" << endl;
     cout << "1. Create Exercise" << endl;
@@ -16,6 +17,7 @@ void menu() {
     cout << "7. Exit" << endl;
 }
 
+// Show the intensity levels options to the user.
 void levels() {
     cout << endl;
     cout << "1. Beginner" << endl;
@@ -24,12 +26,19 @@ void levels() {
     cout << "4. High Performance" << endl;
 }
 
+// Show the exercise types options to the user.
 void exerciseType() {
     cout << "\nType of exercise:" << endl;
     cout << "1. Strength" << endl;
     cout << "2. Cardio" << endl;
 }
 
+/**
+ * Converts a numeric choice for intensity level into its corresponding string representation.
+ *
+ * @param levelChoice An integer representing the user's choice of intensity level (1-4).
+ * @return A string corresponding to the selected intensity level ("Beginner", "Intermediate", "Advanced", or "High Performance").
+ */
 string levelChoice(int levelChoice) {
     string level;
 
@@ -41,8 +50,16 @@ string levelChoice(int levelChoice) {
     return level;
 }
 
+/**
+ * Validates that the user's input is a number within the specified range.
+ * If the input is invalid, it prompts the user to enter a valid option until a correct one is provided.
+ *
+ * @param min The minimum valid option (inclusive).
+ * @param max The maximum valid option (inclusive).
+ * @return The validated option as an integer.
+ */
 int validateOption(int min, int max){
-    cout << "Enter your option: ";
+    cout << "¸\nEnter your option: ";
     int option;
     while (true) {
         cin >> option;
@@ -61,6 +78,7 @@ int validateOption(int min, int max){
     }
 }
 
+// Load a set of predefined exercises into the provided vector to serve as initial data for the application.
 void loadFixtures(vector<Exercise*>& exercises) {
     // ===================== STRENGTH =====================
     // --- Beginner ---
@@ -199,13 +217,13 @@ int main () {
             cout << " " << endl;
             cout << "---------------------" << endl;
             cout << "Enter the id of the exercise to update: " << endl;
-            
+
             cin >> searchId;
-            
+
             bool found = false;
             for (size_t i = 0; i < exercises.size(); i++) {
-                if (exercises[i] != nullptr && exercises[i]->getId() == searchId && searchId != 0) {
-                    exercises[i]->update(); 
+                if (exercises[i]->getId() == searchId) {
+                    exercises[i]->update();
                     found = true;
                     cout << "      " << endl;
                     cout << "-----------------------------------" << endl;
@@ -214,7 +232,7 @@ int main () {
                     exercises[i]->showDetail();
                     break;
                 }
-            
+
             }
             if (!found) cout << "Exercise not found." << endl;
         }
@@ -223,16 +241,19 @@ int main () {
             int searchId;
             cout << "Enter the ID of the exercise to delete: ";
             cin >> searchId;
-            
+
             bool found = false;
             for (size_t i = 0; i < exercises.size(); i++) {
-                if (exercises[i] != nullptr && exercises[i]->getId() == searchId && searchId != 0) {
+                if (exercises[i]->getId() == searchId) {
                     char confirm;
                     cout << "Are you sure you want to delete the exercise '" << exercises[i]->getName() << "'? (y/n): ";
                     cin >> confirm;
-                    
+
                     if (confirm == 'y' || confirm == 'Y') {
-                        exercises[i]->deleteExercise(); 
+                        delete exercises[i]; // Delete the exercise object to free memory.
+                        // Remove the pointer from the vector, and .erase() method will reorganize the vector to fill the gap left by the removed element.
+                        // More documentation: https://www.w3schools.com/cpp/ref_vector_erase.asp
+                        exercises.erase(exercises.begin() + i);
                         cout << "Exercise deleted successfully." << endl;
                     } else {
                         cout << "Operation cancelled." << endl;
@@ -250,24 +271,20 @@ int main () {
             cout << "|| Exercise Details ||" << endl;
             cout << "======================" << endl;
             for (size_t i = 0; i < exercises.size(); i++) {
-                if(exercises[i]->getId() != 0) {
-                    cout << "" << exercises[i]->getId() << ". " << exercises[i]->getName() << endl;
-                }
+                cout << exercises[i]->getId() << ". " << exercises[i]->getName() << endl;
             }
-            cout << "\nEnter the ID of the exercise to view details: ";
-            int searchId;
-            cin >> searchId;
+
+            // .back() does the same thing as writing exercises[exercises.size() - 1] to get the last element of the vector.
+            int exerciseChoice = validateOption(1, exercises.back()->getId());
             bool found = false;
             for (size_t i = 0; i < exercises.size(); i++) {
-                if (exercises[i] != nullptr && exercises[i]->getId() == searchId && searchId != 0) {
+                if (exercises[i]->getId() == exerciseChoice) {
                     exercises[i]->showDetail();
                     found = true;
-                    break; 
+                    break;
                 }
             }
-            if (!found) {
-                cout << "Valid exercise id not found." << endl;
-            }
+            if (!found) cout << "Exercise not found." << endl;
         }
 
         else if (choice == 5) {

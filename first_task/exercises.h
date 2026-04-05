@@ -43,7 +43,6 @@ class Exercise{
 
         void create();
         void update();
-        void deleteExercise();
         virtual void showDetail() const;
 
 };
